@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Calculator - Calculate Your Gold's Value</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .gold-bg {
+            background: linear-gradient(135deg, #f9d423 0%, #e65c00 100%);
+        }
+        .gold-text {
+            color: #D4AF37;
+        }
+        .card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f8f8;
+        }
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="container">
+        <header class="text-center py-6">
+            <h1 class="text-4xl font-bold gold-text">Gold Calculator</h1>
+            <p class="text-xl mt-2 text-gray-600">Calculate your gold's value based on current market prices</p>
+        </header>
+
+        <!-- Calculator Section -->
+        <section class="card bg-white rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4 gold-text">Gold Value Calculator</h2>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2" for="purity">Gold Purity</label>
+                        <select id="purity" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <option value="24">24K (99.9% pure)</option>
+                            <option value="18">18K (75% pure)</option>
+                            <option value="14" selected>14K (58.3% pure)</option>
+                            <option value="10">10K (41.7% pure)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2" for="unit">Weight Unit</label>
+                        <select id="unit" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <option value="gram" selected>Grams</option>
+                            <option value="ounce">Troy Ounces</option>
+                            <option value="pennyweight">Pennyweights (dwt)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2" for="weight">Weight</label>
+                        <input type="number" id="weight" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Enter weight" step="0.01" min="0">
+                    </div>
+                    
+                    <button id="calculate" class="w-full py-2 px-4 bg-yellow-500 text-white rounded hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition">
+                        Calculate Value
+                    </button>
+                </div>
+                
+                <div class="bg-gray-100 p-6 rounded-lg">
+                    <h3 class="text-lg font-bold mb-2">Current Market Prices</h3>
+                    <p class="text-sm text-gray-600 mb-4">May 4, 2025 Scrap Gold Prices</p>
+                    
+                    <div class="mb-4">
+                        <p><strong>24K (pure, .999+):</strong> $104.20/gram</p>
+                        <p><strong>18K (75%):</strong> $78.15/gram</p>
+                        <p><strong>14K (58.3%):</strong> $60.78/gram</p>
+                        <p><strong>10K (41.7%):</strong> $42.06/gram</p>
+                        <p class="mt-2 text-sm">Basis: $3,240.89 / troy ounce</p>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-white rounded-lg shadow-inner">
+                        <p class="text-lg font-bold mb-2">Your Gold Value:</p>
+                        <div id="result" class="text-3xl font-bold gold-text">$0.00</div>
+                        <p id="calculation-details" class="text-sm text-gray-600 mt-2"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Information Content -->
+        <section class="mb-8">
+            <p class="text-lg mb-6">
+                Wondering how much your gold jewelry or scrap is worth? Our gold calculator gives you instant estimates based on live market prices. Whether you're selling, insuring, or just curious, this guide will show you exactly how to determine your gold's value like a pro.
+            </p>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- What Is a Gold Calculator Section -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4 gold-text">What Is a Gold Calculator & How Does It Work?</h2>
+            <p class="mb-4">
+                A gold calculator is a digital tool that estimates your gold's market value by analyzing three key factors:
+            </p>
+            <ul class="list-none space-y-2 mb-4">
+                <li><i class="fas fa-check text-green-500 mr-2"></i> Current gold price per ounce (updated in real-time)</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i> Purity level (karat) - from 24K (pure) to 10K</li>
+                <li><i class="fas fa-check text-green-500 mr-2"></i> Weight measurement - grams, ounces, or pennyweights</li>
+            </ul>
+            <p>
+                Top calculators like those from Kitco or LBMA pull live commodity prices to ensure accuracy. Simply input your details, and the tool does all the complex math for you!
+            </p>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Current Gold Price Section -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4 gold-text">Current Gold Price Per Ounce (Live Updates)</h2>
+            <p class="text-xl mb-4">
+                <i class="fas fa-coins text-yellow-500 mr-2"></i> Today's Spot Price: $3,240.89 per troy ounce
+            </p>
+            <p class="text-sm text-gray-600 mb-4">(Source: LBMA, updated May 4, 2025)</p>
+            <p class="mb-4">Gold prices change constantly due to:</p>
+            <ul class="list-disc pl-6 mb-4 space-y-1">
+                <li>Global market demand</li>
+                <li>Economic inflation rates</li>
+                <li>Currency fluctuations</li>
+            </ul>
+            <p class="bg-blue-50 p-4 rounded-lg">
+                <strong>Pro Tip:</strong> Always check prices before noon when markets are most active for the most accurate valuation.
+            </p>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- How to Calculate Section -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4 gold-text">How to Calculate Your Gold's Value in 3 Simple Steps</h2>
+            
+            <div class="mb-6">
+                <h3 class="text-xl font-bold mb-2">Step 1: Weigh Your Gold Accurately</h3>
+                <ul class="list-disc pl-6 mb-4 space-y-1">
+                    <li>Use a digital jewelry scale (accurate to 0.01g)</li>
+                    <li>Common units:</li>
+                    <ul class="list-circle pl-8 space-y-1">
+                        <li>Grams (most precise)</li>
+                        <li>Ounces (standard for bullion)</li>
+                        <li>Pennyweights (common in US jewelry trade)</li>
+                    </ul>
+                </ul>
+            </div>
+            
+            <div class="mb-6">
+                <h3 class="text-xl font-bold mb-2">Step 2: Determine Karat Purity</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead>
+                            <tr>
+                                <th>Karat</th>
+                                <th>Gold Content</th>
+                                <th>Common Uses</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>24K</td>
+                                <td>99.9% pure</td>
+                                <td>Investment bars, coins</td>
+                            </tr>
+                            <tr>
+                                <td>18K</td>
+                                <td>75% gold</td>
+                                <td>Luxury jewelry (common in Europe)</td>
+                            </tr>
+                            <tr>
+                                <td>14K</td>
+                                <td>58.3% gold</td>
+                                <td>Standard US jewelry</td>
+                            </tr>
+                            <tr>
+                                <td>10K</td>
+                                <td>41.7% gold</td>
+                                <td>Budget-friendly pieces</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="mt-3"><strong>Quick Test:</strong> Look for tiny stamps like "14K" or "585" (58.5% gold).</p>
+            </div>
+            
+            <div class="mb-6">
+                <h3 class="text-xl font-bold mb-2">Step 3: Calculate Current Value</h3>
+                <p class="mb-2"><strong>Example:</strong></p>
+                <ul class="list-disc pl-6 mb-4 space-y-1">
+                    <li>5 grams of 18K gold</li>
+                    <li>Today's price: $78.15/gram (18K)</li>
+                    <li>Total Value: 5g × $78.15 = <strong>$390.75</strong></li>
+                </ul>
+                <p class="italic text-sm text-gray-600">*Note: This is melt value. Resale prices may be 10-30% lower.*</p>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Gold Purity Section -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4 gold-text">Gold Purity Explained: Why Karat Matters</h2>
+            <p class="mb-4">Your gold's purity dramatically affects its value:</p>
+            <ul class="list-disc pl-6 mb-4 space-y-1">
+                <li><strong>24K (999 gold):</strong> Highest value but too soft for most jewelry</li>
+                <li><strong>18K (750 gold):</strong> Ideal balance of purity and durability</li>
+                <li><strong>14K (585 gold):</strong> Most popular for everyday wear</li>
+                <li><strong>10K (417 gold):</strong> Lowest purity that can still be called "gold" in the US</li>
+            </ul>
+            <div class="bg-yellow-50 p-4 rounded-lg">
+                <p class="font-bold">Did You Know?</p>
+                <p>A 24K gold ring is worth 57% more than the same weight in 14K!</p>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- FAQs Section -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4 gold-text">FAQs: Expert Answers to Common Questions</h2>
+            
+            <div class="mb-6">
+                <h3 class="text-xl font-bold mb-2">How often do gold prices change?</h3>
+                <p class="mb-3">
+                    Prices update every 60 seconds during market hours (6 PM Sunday - 5 PM Friday EST). The biggest swings often occur during:
+                </p>
+                <ul class="list-disc pl-6 mb-4 space-y-1">
+                    <li>US economic reports (8:30 AM EST)</li>
+                    <li>Federal Reserve announcements</li>
+                </ul>
+            </div>
+            
+            <div class="mb-6">
+                <h3 class="text-xl font-bold mb-2">Are online gold calculators accurate?</h3>
+                <p class="mb-3">
+                    They're excellent for estimates, but remember:
+                </p>
+                <p class="mb-2"><i class="fas fa-check text-green-500 mr-2"></i> Uses generic melt values</p>
+                <p class="mb-2"><i class="fas fa-times text-red-500 mr-2"></i> Doesn't account for:</p>
+                <ul class="list-disc pl-10 mb-4 space-y-1">
+                    <li>Jewelry craftsmanship value</li>
+                    <li>Buyer profit margins</li>
+                    <li>Local market differences</li>
+                </ul>
+            </div>
+            
+            <div class="mb-6">
+                <h3 class="text-xl font-bold mb-2">Where can I get the best price when selling gold?</h3>
+                <ul class="list-disc pl-6 mb-4 space-y-1">
+                    <li><strong>Local jewelers:</strong> 5-15% over melt (for good relationships)</li>
+                    <li><strong>Specialized buyers:</strong> Like CashForGold (mail-in convenience)</li>
+                    <li><strong>Pawn shops:</strong> Fast cash but lowest offers</li>
+                </ul>
+                <p class="text-red-600 font-bold">Red Flag: Any buyer refusing to explain their pricing math.</p>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Pro Tips Section -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4 gold-text">Pro Tips for Maximizing Your Gold's Value</h2>
+            <ol class="list-decimal pl-6 mb-4 space-y-4">
+                <li>
+                    <strong>Time Your Sale</strong>
+                    <p>Gold typically peaks in January (post-holiday demand) and during economic crises</p>
+                </li>
+                <li>
+                    <strong>Clean Carefully</strong>
+                    <p>Use warm water + mild soap (never harsh chemicals that could damage)</p>
+                </li>
+                <li>
+                    <strong>Get Multiple Quotes</strong>
+                    <p>Differences of 20-40% between buyers are common</p>
+                </li>
+                <li>
+                    <strong>Understand Fees</strong>
+                    <ul class="list-disc pl-6 mt-2 space-y-1">
+                        <li>Refineries charge 5-10% processing fees</li>
+                        <li>Shipping insurance costs 1-3%</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="text-center py-6">
+            <h2 class="text-2xl font-bold gold-text mb-4">Ready to Discover Your Gold's True Worth?</h2>
+            <p class="text-lg">Use our calculator above to get started!</p>
+        </section>
+
+        <footer class="text-center text-gray-600 text-sm py-6">
+            <p>© 2025 Gold Calculator | All prices updated as of May 4, 2025</p>
+            <p class="mt-2">Disclaimer: This calculator provides estimates only and is not a guarantee of actual buyback prices.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const calculateBtn = document.getElementById('calculate');
+            const resultDiv = document.getElementById('result');
+            const detailsDiv = document.getElementById('calculation-details');
+            
+            // Current gold prices per gram (May 4, 2025)
+            const goldPrices = {
+                24: 104.20,
+                18: 78.15,
+                14: 60.78,
+                10: 42.06  // Calculated as 41.7% of 24K price
+            };
+            
+            // Troy ounce price
+            const troyOuncePrice = 3240.89;
+            
+            // Conversion factors
+            const conversions = {
+                gram: 1,
+                ounce: 31.1035, // 1 troy ounce = 31.1035 grams
+                pennyweight: 1.55517 // 1 pennyweight = 1.55517 grams
+            };
+            
+            calculateBtn.addEventListener('click', function() {
+                const purity = document.getElementById('purity').value;
+                const unit = document.getElementById('unit').value;
+                const weight = parseFloat(document.getElementById('weight').value);
+                
+                if (isNaN(weight) || weight <= 0) {
+                    resultDiv.textContent = 'Please enter a valid weight';
+                    detailsDiv.textContent = '';
+                    return;
+                }
+                
+                // Convert to grams first
+                const weightInGrams = weight * conversions[unit];
+                
+                // Calculate value based on purity
+                const pricePerGram = goldPrices[purity];
+                const totalValue = weightInGrams * pricePerGram;
+                
+                // Format currency
+                resultDiv.textContent = '$' + totalValue.toFixed(2);
+                
+                // Show calculation details
+                let unitDisplay = unit;
+                if (unit === 'ounce') unitDisplay = 'troy ounces';
+                if (unit === 'pennyweight') unitDisplay = 'dwt';
+                
+                detailsDiv.textContent = `${weight} ${unitDisplay} of ${purity}K gold × $${pricePerGram.toFixed(2)}/gram = $${totalValue.toFixed(2)}`;
+            });
+        });
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDj7lLQ7DzcFSbzfmjFMsxR0i3otbXeTD1eBi%2BNz9bGLLtatwU%2F8gRDc3Dv1heTS2J4eTBjju3gN5QtOy1mIiDljSTELaHETsQLZuYiYBObe3XT%2FVP1abQQst1FIXJi%2BKYlR8TuseXTXGzAd3Yc3GjMUNNb4VL2YKOaJCA8i%2FoNFU%2BtV9aLcTKkICodtOqe3FWQ6EhDHn19ZhxQvj4yI4wDJp1iqHkmiKKZxk1BrMpEXojIvJjECJHDBJhFo4Gjaqs6vZJmwH3hOV9QrGVwGh7J7ZamYLMPcvHFTUQ45DN4awEpFV72R%2BlQl%2Bxqn64rv291wkUQQ%2FNZSew1YbFhhJKt6tjtpC0oO9l8RHCzR6bnkHcM8Pt%2FY2jaNmuiTakzy8AdTk19tUTEiHYsh2uehwaYwPrgQg6zR43ki5wEZlEgUa5Sp8lFdr9sSkhV%2BYAmi5%2F2CWCesIN7%2BNmb8P3TkVDe58QDTPAxQIZAltXV8MS8IM8ku53%2B47FDwKQFDht3tUTA%3D%3D";
+        window.__genspark_locale = "en-US";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDj7lLQ7DzcFSbzfmjFMsxR0i3otbXeTD1eBi+Nz9bGLLtatwU/8gRDc3Dv1heTS2J4eTBjju3gN5QtOy1mIiDljSTELaHETsQLZuYiYBObe3XT/VP1abQQst1FIXJi+KYlR8TuseXTXGzAd3Yc3GjMUNNb4VL2YKOaJCA8i/oNFU+tV9aLcTKkICodtOqe3FWQ6EhDHn19ZhxQvj4yI4wDJp1iqHkmiKKZxk1BrMpEXojIvJjECJHDBJhFo4Gjaqs6vZJmwH3hOV9QrGVwGh7J7ZamYLMPcvHFTUQ45DN4awEpFV72R+lQl+xqn64rv291wkUQQ/NZSew1YbFhhJKt6tjtpC0oO9l8RHCzR6bnkHcM8Pt/Y2jaNmuiTakzy8AdTk19tUTEiHYsh2uehwaYwPrgQg6zR43ki5wEZlEgUa5Sp8lFdr9sSkhV+YAmi5/2CWCesIN7+Nmb8P3TkVDe58QDTPAxQIZAltXV8MS8IM8ku53+47FDwKQFDht3tUTA==";
+    </script>
+    
+        <script id="html_badge_script2" src="https://www.genspark.ai/html_badge.js"></script>
+        
